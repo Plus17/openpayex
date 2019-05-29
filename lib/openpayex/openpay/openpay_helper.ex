@@ -2,7 +2,6 @@ defmodule OpenPayEx.OpenPay.OpenPayHelper do
   @moduledoc """
   Methods for OpenPay Client
   """
-  require Logger
 
   alias OpenPayEx.OpenPay.Client
 
@@ -21,16 +20,12 @@ defmodule OpenPayEx.OpenPay.OpenPayHelper do
   defp _process_response(response) do
     case response do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        Logger.info "Success request"
         {:ok, body}
       {:ok, %HTTPoison.Response{status_code: 500, body: body}} ->
-        Logger.error "Internal Server Error: #{body}"
         {:error, body}
       {:ok, %HTTPoison.Response{status_code: _status_code, body: body}} ->
-        Logger.error "Error on request #{inspect(body)}"
         {:error, body}
       {:error, %HTTPoison.Error{reason: reason}} ->
-        Logger.error "Connection error #{reason}"
         {:error, reason}
     end
   end
