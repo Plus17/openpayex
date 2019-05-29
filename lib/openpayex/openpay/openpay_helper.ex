@@ -10,16 +10,10 @@ defmodule OpenPayEx.OpenPay.OpenPayHelper do
   Make a request
   """
   @spec http_request(atom, String.t, map) :: {:ok, map} | {:error, map}
-  def http_request(:post, endpoint, params) do
-    response = Client.post(endpoint, params)
-
-    _process_response(response)
-  end
-
-  def http_request(:get, endpoint, params) do
-    response = Client.get(endpoint, params)
-
-    _process_response(response)
+  def http_request(method, endpoint, params) do
+    method
+    |> Client.request(endpoint, params)
+    |> _process_response()
   end
 
   # Process HTTP response
