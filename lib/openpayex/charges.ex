@@ -43,6 +43,15 @@ defmodule OpenPayEx.Charges do
 
   def create(_params), do: {:error, :bad_params}
 
+  @doc """
+  Get charge
+  """
+  @spec get(String.t) :: map
+  def get(charge_id) when is_binary(charge_id) do
+    endpoint = "/#{_get_merchant_id()}/charges/#{charge_id}"
+    OpenPayHelper.http_request(:get, endpoint)
+  end
+
   # Get a merchant id
   @spec _get_merchant_id() :: Strint.t()
   defp _get_merchant_id() do

@@ -9,7 +9,7 @@ defmodule OpenPayEx.OpenPay.OpenPayHelper do
   Make a request
   """
   @spec http_request(atom, String.t, map) :: {:ok, map} | {:error, map}
-  def http_request(method, endpoint, params) do
+  def http_request(method, endpoint, params \\ %{}) do
     method
     |> Client.request(endpoint, params)
     |> _process_response()
