@@ -59,8 +59,16 @@ defmodule OpenPayEx.Charges do
   Get charge
   """
   @spec get(String.t) :: map
-  def get(charge_id) when is_binary(charge_id) do
-    endpoint = "/#{_get_merchant_id()}/charges/#{charge_id}"
+  def get(transaction_id) when is_binary(transaction_id) do
+    endpoint = "/#{_get_merchant_id()}/charges/#{transaction_id}"
+    OpenPayHelper.http_request(:get, endpoint)
+  end
+
+  def get(%{
+    transaction_id: transaction_id,
+    customer_id: customer_id
+  }) when is_binary(transaction_id) and is_binary(customer_id) do
+    endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}/charges/#{transaction_id}"
     OpenPayHelper.http_request(:get, endpoint)
   end
 
