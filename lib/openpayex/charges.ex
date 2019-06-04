@@ -41,6 +41,18 @@ defmodule OpenPayEx.Charges do
     OpenPayHelper.http_request(:post, endpoint, params)
   end
 
+  def create(%{
+    method: _method,
+    amount: amount,
+    description: _description,
+    order_id: _order_id,
+    customer_id: customer_id
+  } = params) when is_integer(amount) or is_float(amount) and is_binary(customer_id) do
+    endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}/charges"
+    params = Map.drop(params, [:customer_id])
+    OpenPayHelper.http_request(:post, endpoint, params)
+  end
+
   def create(_params), do: {:error, :bad_params}
 
   @doc """
