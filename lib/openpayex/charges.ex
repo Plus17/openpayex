@@ -29,7 +29,7 @@ defmodule OpenPayEx.Charges do
   {:ok, response}
   ```
   """
-  @spec create(map) :: map
+  @spec create(map) :: {:ok, map}
   def create(%{
     method: _method,
     amount: amount,
@@ -58,7 +58,7 @@ defmodule OpenPayEx.Charges do
   @doc """
   Get charge
   """
-  @spec get(String.t) :: map
+  @spec get(String.t) :: {:ok, map}
   def get(transaction_id) when is_binary(transaction_id) do
     endpoint = "/#{_get_merchant_id()}/charges/#{transaction_id}"
     OpenPayHelper.http_request(:get, endpoint)
@@ -69,6 +69,15 @@ defmodule OpenPayEx.Charges do
     customer_id: customer_id
   }) when is_binary(transaction_id) and is_binary(customer_id) do
     endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}/charges/#{transaction_id}"
+    OpenPayHelper.http_request(:get, endpoint)
+  end
+
+  @doc """
+  List charges
+  """
+  @spec list() :: {:ok, [map]}
+  def list() do
+     endpoint = "/#{_get_merchant_id()}/charges"
     OpenPayHelper.http_request(:get, endpoint)
   end
 
