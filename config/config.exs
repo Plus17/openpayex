@@ -24,7 +24,7 @@ use Mix.Config
 config :openpayex,
   merchant_id: System.get_env("MERCHANT_ID"),
   private_key: System.get_env("PRIVATE_KEY"),
-  uri_base: System.get_env("uri_base")
+  uri_base: System.get_env("URI_BASE")
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
