@@ -63,6 +63,23 @@ defmodule Openpayex.Customers do
     OpenPayHelper.http_request(:put, endpoint, params)
   end
 
+  @doc """
+  Get a customer
+
+   ## Example;
+  ```
+  customer_id = "a4wgoshubzmsjqujdsig"
+
+  iex> Openpayex.Customers.get(ustomer_id)
+  {:ok, response}
+  ```
+  """
+  @spec get(String.t) :: {:ok, map}
+  def get(customer_id) do
+    endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}"
+    OpenPayHelper.http_request(:get, endpoint)
+  end
+
   # Get a merchant id
   @spec _get_merchant_id() :: Strint.t()
   defp _get_merchant_id() do
