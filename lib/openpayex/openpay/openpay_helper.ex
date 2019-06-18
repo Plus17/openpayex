@@ -1,9 +1,9 @@
-defmodule OpenPayEx.OpenPay.OpenPayHelper do
+defmodule Openpayex.OpenPay.OpenPayHelper do
   @moduledoc """
   Methods for OpenPay Client
   """
 
-  alias OpenPayEx.OpenPay.Client
+  alias Openpayex.OpenPay.Client
 
   @doc """
   Make a request
@@ -19,7 +19,7 @@ defmodule OpenPayEx.OpenPay.OpenPayHelper do
   @spec _process_response(map) :: {:ok, map} | {:error, map} | {:error, String.t}
   defp _process_response(response) do
     case response do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+      {:ok, %HTTPoison.Response{status_code: status_code, body: body}} when status_code in [200, 201] ->
         {:ok, body}
       {:ok, %HTTPoison.Response{status_code: 500, body: body}} ->
         {:error, body}
