@@ -31,6 +31,38 @@ defmodule Openpayex.Customers do
     OpenPayHelper.http_request(:post, endpoint, params)
   end
 
+  @doc """
+  Update a customer
+
+  ## Example;
+  ```
+  params = %{
+    "name" => "customer name",
+    "email" => "customer_email@me.com",
+    "address" => %{
+      "city" =>"Queretaro",
+      "state" =>"Queretaro",
+      "line1" =>"Calle 10",
+      "postal_code" =>"76000",
+      "line2" =>"col. san pablo",
+      "line3" =>"entre la calle 1 y la 2",
+      "country_code" =>"MX"
+    },
+    "phone_number" => "44209087654"
+  }
+
+  customer_id = "a4wgoshubzmsjqujdsig"
+
+  iex> Openpayex.Customers.update(params, customer_id)
+  {:ok, response}
+  ```
+  """
+  @spec update(map, String.t) :: {:ok, map}
+  def update(params, customer_id) do
+    endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}"
+    OpenPayHelper.http_request(:put, endpoint, params)
+  end
+
   # Get a merchant id
   @spec _get_merchant_id() :: Strint.t()
   defp _get_merchant_id() do
