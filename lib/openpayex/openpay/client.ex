@@ -1,4 +1,4 @@
-defmodule OpenPayEx.OpenPay.Client do
+defmodule Openpayex.OpenPay.Client do
   @moduledoc """
   Client for OpenPay API
   """

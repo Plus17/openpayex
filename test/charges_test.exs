@@ -1,10 +1,10 @@
-defmodule OpenPayEx.ChargesTest do
+defmodule Openpayex.ChargesTest do
   use ExUnit.Case
 
   import Mock
 
-  alias OpenPayEx.Charges
-  alias OpenPayEx.OpenPay.OpenPayHelper
+  alias Openpayex.Charges
+  alias Openpayex.OpenPay.OpenPayHelper
 
   @bank_charge_response %{
     "amount" => 100.0,

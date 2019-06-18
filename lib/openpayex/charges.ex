@@ -1,4 +1,4 @@
-defmodule OpenPayEx.Charges do
+defmodule Openpayex.Charges do
   @moduledoc """
   Functions for working with charges at Openpay. Through this API you can:
 
@@ -7,7 +7,7 @@ defmodule OpenPayEx.Charges do
   * list charges
   """
 
-  alias OpenPayEx.OpenPay.OpenPayHelper
+  alias Openpayex.OpenPay.OpenPayHelper
 
   @doc """
   Create charge without client
