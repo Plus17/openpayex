@@ -98,7 +98,7 @@ defmodule Openpayex.Customers do
   @doc """
   Get a customer
 
-   ## Example;
+  ## Example;
   ```
   customer_id = "a4wgoshubzmsjqujdsig"
 
@@ -130,6 +130,23 @@ defmodule Openpayex.Customers do
   def get(customer_id) do
     endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}"
     OpenPayHelper.http_request(:get, endpoint)
+  end
+
+  @doc """
+  Delete a customer
+
+  ## Example;
+  ```
+  customer_id = "a4wgoshubzmsjqujdsig"
+
+  iex> Openpayex.Customers.delete(ustomer_id)
+  {:ok, ""}
+  ```
+  """
+  @spec delete(String.t) :: {:ok, nil}
+  def delete(customer_id) do
+    endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}"
+    OpenPayHelper.http_request(:delete, endpoint)
   end
 
   # Get a merchant id
