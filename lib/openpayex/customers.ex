@@ -154,7 +154,7 @@ defmodule Openpayex.Customers do
   """
   @spec list(map) :: {:ok, map}
   def list(params \\ %{}) do
-    endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}"
+    endpoint = "/#{_get_merchant_id()}/customers"
 
     endpoint_with_filters = _add_query_params(endpoint, params)
 
