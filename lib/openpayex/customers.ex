@@ -143,7 +143,7 @@ defmodule Openpayex.Customers do
   {:ok, ""}
   ```
   """
-  @spec delete(String.t) :: {:ok, ""}
+  @spec delete(String.t) :: {:ok, String.t}
   def delete(customer_id) do
     endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}"
     OpenPayHelper.http_request(:delete, endpoint)
