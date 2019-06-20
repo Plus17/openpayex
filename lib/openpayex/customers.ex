@@ -143,10 +143,33 @@ defmodule Openpayex.Customers do
   {:ok, ""}
   ```
   """
-  @spec delete(String.t) :: {:ok, nil}
+  @spec delete(String.t) :: {:ok, ""}
   def delete(customer_id) do
     endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}"
     OpenPayHelper.http_request(:delete, endpoint)
+  end
+
+  @doc """
+  List client
+  """
+  @spec list(map) :: {:ok, map}
+  def list(params \\ %{}) do
+    endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}"
+
+    endpoint_with_filters = _add_query_params(endpoint, params)
+
+    OpenPayHelper.http_request(:delete, endpoint_with_filters)
+  end
+
+  # Adds query params to endpoint
+  @spec _add_query_params(String.t, map) :: String.t
+  defp _add_query_params(url, params) do
+    query_params = URI.encode_query(params)
+
+    url
+    |> URI.parse()
+    |> Map.put(:query, query_params)
+    |> URI.to_string()
   end
 
   # Get a merchant id
