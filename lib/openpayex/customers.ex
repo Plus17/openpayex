@@ -158,7 +158,7 @@ defmodule Openpayex.Customers do
 
     endpoint_with_filters = _add_query_params(endpoint, params)
 
-    OpenPayHelper.http_request(:delete, endpoint_with_filters)
+    OpenPayHelper.http_request(:get, endpoint_with_filters)
   end
 
   # Adds query params to endpoint
