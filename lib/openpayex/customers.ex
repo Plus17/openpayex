@@ -139,7 +139,7 @@ defmodule Openpayex.Customers do
   ```
   customer_id = "a4wgoshubzmsjqujdsig"
 
-  iex> Openpayex.Customers.delete(ustomer_id)
+  iex> Openpayex.Customers.delete(customer_id)
   {:ok, ""}
   ```
   """
@@ -151,6 +151,54 @@ defmodule Openpayex.Customers do
 
   @doc """
   List client
+
+  ## Example;
+  ```
+  iex> Openpayex.Customers.list()
+  {:ok,
+    [
+      %{
+        "address" => nil,
+        "clabe" => nil,
+        "creation_date" => "2019-06-17T21:57:47-05:00",
+        "email" => "customer_email@me.com",
+        "external_id" => nil,
+        "id" => "a6hcwapaceqdxgrmqvfo",
+        "last_name" => nil,
+        "name" => "customer name",
+        "phone_number" => nil
+      },
+      %{
+        "address" => nil,
+        "clabe" => nil,
+        "creation_date" => "2019-06-17T21:54:24-05:00",
+        "email" => "customer_email@me.com",
+        "external_id" => nil,
+        "id" => "abzaacjwlfaig45bec3m",
+        "last_name" => nil,
+        "name" => "customer name",
+        "phone_number" => nil
+      }
+    ]
+  }
+
+  iex> Openpayex.Customers.list(%{limit: 1})
+  {:ok,
+    [
+      %{
+        "address" => nil,
+        "clabe" => nil,
+        "creation_date" => "2019-06-17T21:57:47-05:00",
+        "email" => "customer_email@me.com",
+        "external_id" => nil,
+        "id" => "a6hcwapaceqdxgrmqvfo",
+        "last_name" => nil,
+        "name" => "customer name",
+        "phone_number" => nil
+      }
+    ]
+  }
+  ```
   """
   @spec list(map) :: {:ok, map}
   def list(params \\ %{}) do
