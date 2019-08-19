@@ -21,6 +21,11 @@ use Mix.Config
 #     config :logger, level: :info
 #
 
+config :openpayex,
+  merchant_id: System.get_env("MERCHANT_ID"),
+  private_key: System.get_env("PRIVATE_KEY"),
+  uri_base: System.get_env("URI_BASE")
+
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
 # by uncommenting the line below and defining dev.exs, test.exs and such.
