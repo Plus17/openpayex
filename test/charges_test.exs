@@ -6,41 +6,6 @@ defmodule Openpayex.ChargesTest do
   alias Openpayex.Charges
   alias Openpayex.OpenPay.OpenPayHelper
 
-  @bank_charge_response %{
-    "amount" => 100.0,
-    "authorization" => nil,
-    "conciliated" => false,
-    "creation_date" => "2019-05-21T21:36:17-05:00",
-    "currency" => "MXN",
-    "customer" => %{
-      "address" => nil,
-      "clabe" => nil,
-      "creation_date" => "2019-05-21T21:36:17-05:00",
-      "email" => "email@email.com",
-      "external_id" => nil,
-      "last_name" => nil,
-      "name" => "Soy un cliente",
-      "phone_number" => nil
-    },
-    "description" => "Cargo con banco",
-    "due_date" => "2019-06-20T23:59:59-05:00",
-    "error_message" => nil,
-    "id" => "trv2souo8bvx6f00bffv",
-    "method" => "bank_account",
-    "operation_date" => "2019-05-21T21:36:17-05:00",
-    "operation_type" => "in",
-    "order_id" => "oid-000555",
-    "payment_method" => %{
-      "agreement" => "0000000",
-      "bank" => "BBVA Bancomer",
-      "clabe" => "000000000000000001",
-      "name" => "11005248323220343213",
-      "type" => "bank_transfer"
-    },
-    "status" => "in_progress",
-    "transaction_type" => "charge"
-  }
-
  @store_charge_response %{
   "id" => "trqbvetwiyqm5cntfqbf",
   "authorization" => nil,
@@ -74,19 +39,21 @@ defmodule Openpayex.ChargesTest do
 }
 
   test "create bank charge for bank without create a client" do
-    with_mock OpenPayHelper, http_request: fn _method, _url, _params -> {:ok, @bank_charge_response} end do
+
       params = %{
         method: "banck_account",
         amount: 100,
         description: "Cargo con banco",
-        order_id: "oid-000557",
+        order_id: "oid-000555",
         customer: %{
           name: "Soy un cliente",
           email: "email@email.com"
         }
       }
-      assert Charges.create(params) == {:ok, @bank_charge_response}
-    end
+      assert {:ok, response} = Charges.create(params)
+
+      assert Map.get(response, "order_id") == params.order_id
+      assert Map.get(response, "status") == "in_progress"
   end
 
   test "create store charge for store without create a client" do
