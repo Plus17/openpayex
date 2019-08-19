@@ -77,13 +77,17 @@ defmodule Openpayex.Charges do
   """
   @spec list() :: {:ok, [map]}
   def list() do
-     endpoint = "/#{_get_merchant_id()}/charges"
+    endpoint = "/#{_get_merchant_id()}/charges"
     OpenPayHelper.http_request(:get, endpoint)
   end
 
   # Get a merchant id
   @spec _get_merchant_id() :: Strint.t()
   defp _get_merchant_id() do
-    Application.get_env(:openpayex, :merchant_id)
+    if Mix.env() == :test do
+      "test_merchant_id"
+    else
+      Application.get_env(:openpayex, :merchant_id)
+    end
   end
 end
