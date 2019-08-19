@@ -14,7 +14,6 @@ defmodule Openpayex.OpenPay.OpenPayHelper do
   def http_request(method, endpoint, params \\ %{}) do
     method
     |> Client.request(endpoint, params)
-    |> IO.inspect(label: "RESPONSE")
     |> _process_response()
   end
 
