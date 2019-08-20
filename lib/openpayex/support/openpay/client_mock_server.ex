@@ -45,23 +45,54 @@ defmodule Openpayex.OpenPay.ClientMockServer do
     "transaction_type" => "charge"
   }
 
+  @store_charge_response %{
+    "id" => "trqbvetwiyqm5cntfqbf",
+    "authorization" => nil,
+    "operation_type" => "in",
+    "method" => "store",
+    "transaction_type" => "charge",
+    "status" => "in_progress",
+    "conciliated" => false,
+    "creation_date" => "2019-05-21T21:36:17-05:00",
+    "operation_date" => "2019-05-21T21:36:17-05:00",
+    "description" => "Cargo a tienda",
+    "error_message" => nil,
+    "order_id" => "oid-00056",
+    "payment_method" => %{
+      "type" => "store",
+      "reference" => "1010101722591752",
+      "barcode_url" => "https://sandbox-api.openpay.mx/barcode/1010101722591752?width=1&height=45&text=false"
+    },
+    "amount" => 100.00,
+    "customer" => %{
+      "name" => "Soy un cliente",
+      "last_name" => nil,
+      "email" => "email@email.com",
+      "phone_number" => nil,
+      "address" => nil,
+      "creation_date" => "2019-05-28T23:23:18-05:00",
+      "external_id" => nil,
+      "clabe" => nil
+    },
+    "currency" => "MXN"
+  }
+
   post "/test_merchant_id/charges" do
-    case conn.params do
-      %{
-        "method" => "banck_account",
-        "amount" => 100,
-        "description" => "Cargo con banco",
-        "order_id" => "oid-000555",
-        "customer" => %{
-          "name" => "Soy un cliente",
-          "email" => "email@email.com"
-        }
-      } ->
+    case _check_params(conn.params) do
+      :charge_bank_account ->
         success(conn, @bank_charge_response)
+      :charge_store ->
+        success(conn, @store_charge_response)
       _params ->
         failure(conn)
     end
   end
+
+  defp _check_params(%{"method" => "banck_account"}), do: :charge_bank_account
+
+  defp _check_params(%{"method" => "store"}), do: :charge_store
+
+  defp _check_params(_params), do: :failure
 
   match _ do
     send_resp(conn, 404, "oops... Nothing here :(")
