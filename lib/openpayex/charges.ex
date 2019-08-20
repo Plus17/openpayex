@@ -10,7 +10,7 @@ defmodule Openpayex.Charges do
   alias Openpayex.OpenPay.OpenPayHelper
 
   @doc """
-  Create charge without client
+  Create charge without client.
 
   ## Example:
   ```
@@ -25,7 +25,7 @@ defmodule Openpayex.Charges do
     }
   }
 
-  iex> Charges.create(params)
+  iex> Openpayex.Charges.create(params)
   {:ok, response}
   ```
   """
@@ -35,25 +35,44 @@ defmodule Openpayex.Charges do
     amount: amount,
     description: _description,
     order_id: _order_id,
-    customer: %{}
-  } = params) when is_integer(amount) or is_float(amount) do
+    customer: customer
+  } = params) when is_integer(amount) or is_float(amount) and is_map(customer) do
     endpoint = "/#{_get_merchant_id()}/charges"
     OpenPayHelper.http_request(:post, endpoint, params)
   end
 
-  def create(%{
+  def create(_params), do: {:error, :bad_params}
+
+  @doc """
+  Create charge with client
+
+  ## Example:
+  ```
+  params = %{
+    method: "bank_account",
+    amount: 100,
+    description: "Cargo con banco",
+    order_id: "oid-00055"
+  }
+
+  customer_id = "aqkd4esexqlkofk6utec"
+
+  iex> Openpayex.Charges.create_with_customer(params, customer_id)
+  {:ok, response}
+  ```
+  """
+  @spec create_with_customer(map, String.t) :: {:ok, map}
+  def create_with_customer(%{
     method: _method,
     amount: amount,
     description: _description,
-    order_id: _order_id,
-    customer_id: customer_id
-  } = params) when is_integer(amount) or is_float(amount) and is_binary(customer_id) do
+    order_id: _order_id
+  } = params, customer_id) when is_integer(amount) or is_float(amount) and is_binary(customer_id) do
     endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}/charges"
-    params = Map.drop(params, [:customer_id])
     OpenPayHelper.http_request(:post, endpoint, params)
   end
 
-  def create(_params), do: {:error, :bad_params}
+  def create_with_client(_params), do: {:error, :bad_params}
 
   @doc """
   Get charge
