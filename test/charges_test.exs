@@ -2,7 +2,6 @@ defmodule Openpayex.ChargesTest do
   use ExUnit.Case
 
   alias Openpayex.Charges
-  alias Openpayex.OpenPay.OpenPayHelper
 
   test "create bank charge for bank without create a client" do
     params = %{
