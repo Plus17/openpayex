@@ -30,13 +30,16 @@ defmodule Openpayex.Charges do
   ```
   """
   @spec create(map) :: {:ok, map}
-  def create(%{
-    method: _method,
-    amount: amount,
-    description: _description,
-    order_id: _order_id,
-    customer: customer
-  } = params) when is_integer(amount) or is_float(amount) and is_map(customer) do
+  def create(
+        %{
+          method: _method,
+          amount: amount,
+          description: _description,
+          order_id: _order_id,
+          customer: customer
+        } = params
+      )
+      when is_integer(amount) or (is_float(amount) and is_map(customer)) do
     endpoint = "/#{_get_merchant_id()}/charges"
     OpenPayHelper.http_request(:post, endpoint, params)
   end
@@ -61,13 +64,17 @@ defmodule Openpayex.Charges do
   {:ok, response}
   ```
   """
-  @spec create_with_customer(map, String.t) :: {:ok, map}
-  def create_with_customer(%{
-    method: _method,
-    amount: amount,
-    description: _description,
-    order_id: _order_id
-  } = params, customer_id) when is_integer(amount) or is_float(amount) and is_binary(customer_id) do
+  @spec create_with_customer(map, String.t()) :: {:ok, map}
+  def create_with_customer(
+        %{
+          method: _method,
+          amount: amount,
+          description: _description,
+          order_id: _order_id
+        } = params,
+        customer_id
+      )
+      when is_integer(amount) or (is_float(amount) and is_binary(customer_id)) do
     endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}/charges"
     OpenPayHelper.http_request(:post, endpoint, params)
   end
@@ -77,16 +84,17 @@ defmodule Openpayex.Charges do
   @doc """
   Get charge
   """
-  @spec get(String.t) :: {:ok, map}
+  @spec get(String.t()) :: {:ok, map}
   def get(transaction_id) when is_binary(transaction_id) do
     endpoint = "/#{_get_merchant_id()}/charges/#{transaction_id}"
     OpenPayHelper.http_request(:get, endpoint)
   end
 
   def get(%{
-    transaction_id: transaction_id,
-    customer_id: customer_id
-  }) when is_binary(transaction_id) and is_binary(customer_id) do
+        transaction_id: transaction_id,
+        customer_id: customer_id
+      })
+      when is_binary(transaction_id) and is_binary(customer_id) do
     endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}/charges/#{transaction_id}"
     OpenPayHelper.http_request(:get, endpoint)
   end

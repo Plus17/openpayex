@@ -6,11 +6,10 @@ defmodule Openpayex.Application do
   use Application
 
   def start(_type, _args) do
-    children = [
-    ]
+    children = []
 
     children =
-      if (Mix.env() == :test) do
+      if Mix.env() == :test do
         [
           Plug.Cowboy.child_spec(
             scheme: :http,

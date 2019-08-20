@@ -2,13 +2,16 @@ defmodule Openpayex.OpenPay.ClientMockServer do
   @moduledoc false
 
   use Plug.Router
-  plug Plug.Parsers, parsers: [:json],
-                    pass:  ["text/*"],
-                    json_decoder: Jason
 
-  plug Plug.Logger
-  plug :match
-  plug :dispatch
+  plug(Plug.Parsers,
+    parsers: [:json],
+    pass: ["text/*"],
+    json_decoder: Jason
+  )
+
+  plug(Plug.Logger)
+  plug(:match)
+  plug(:dispatch)
 
   @bank_charge_response %{
     "amount" => 100.0,
@@ -61,7 +64,8 @@ defmodule Openpayex.OpenPay.ClientMockServer do
     "payment_method" => %{
       "type" => "store",
       "reference" => "1010101722591752",
-      "barcode_url" => "https://sandbox-api.openpay.mx/barcode/1010101722591752?width=1&height=45&text=false"
+      "barcode_url" =>
+        "https://sandbox-api.openpay.mx/barcode/1010101722591752?width=1&height=45&text=false"
     },
     "amount" => 100.00,
     "customer" => %{
@@ -81,8 +85,10 @@ defmodule Openpayex.OpenPay.ClientMockServer do
     case _check_params(conn.params) do
       :charge_bank_account ->
         success(conn, @bank_charge_response)
+
       :charge_store ->
         success(conn, @store_charge_response)
+
       _params ->
         failure(conn)
     end
@@ -107,5 +113,4 @@ defmodule Openpayex.OpenPay.ClientMockServer do
     conn
     |> Plug.Conn.send_resp(422, Jason.encode!(%{message: "error message"}))
   end
-
 end
