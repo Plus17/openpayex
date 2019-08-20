@@ -7,12 +7,20 @@ defmodule Openpayex.Application do
 
   def start(_type, _args) do
     children = [
-      Plug.Cowboy.child_spec(
-        scheme: :http,
-        plug: Openpayex.OpenPay.ClientMockServer,
-        options: [port: 8084]
-      )
     ]
+
+    children =
+      if (Mix.env() == :test) do
+        [
+          Plug.Cowboy.child_spec(
+            scheme: :http,
+            plug: Openpayex.OpenPay.ClientMockServer,
+            options: [port: 8084]
+          )
+        ] ++ children
+      else
+        children
+      end
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
