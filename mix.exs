@@ -24,7 +24,6 @@ defmodule Openpayex.MixProject do
     [
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
       {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
-      {:mock, "~> 0.3.0", only: :test},
       {:jason, "~> 1.1"},
       {:httpoison, "~> 1.4"},
       {:plug_cowboy, "~> 2.0"}
