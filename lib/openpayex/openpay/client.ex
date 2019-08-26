@@ -5,12 +5,16 @@ defmodule Openpayex.OpenPay.Client do
 
   use HTTPoison.Base
 
-  def base_url() do
-    Application.get_env(:openpayex, :uri_base)
+  defp _base_url() do
+    if Mix.env() == :test do
+      "http://localhost:8084"
+    else
+      Application.get_env(:openpayex, :uri_base)
+    end
   end
 
   def process_url(endpoint) do
-    "#{base_url()}/#{endpoint}"
+    "#{_base_url()}#{endpoint}"
   end
 
   def process_request_headers(_headers) do

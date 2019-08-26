@@ -89,7 +89,7 @@ defmodule Openpayex.Customers do
   }
   ```
   """
-  @spec update(map, String.t) :: {:ok, map}
+  @spec update(map, String.t()) :: {:ok, map}
   def update(params, customer_id) do
     endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}"
     OpenPayHelper.http_request(:put, endpoint, params)
@@ -126,7 +126,7 @@ defmodule Openpayex.Customers do
   }
   ```
   """
-  @spec get(String.t) :: {:ok, map}
+  @spec get(String.t()) :: {:ok, map}
   def get(customer_id) do
     endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}"
     OpenPayHelper.http_request(:get, endpoint)
@@ -143,7 +143,7 @@ defmodule Openpayex.Customers do
   {:ok, ""}
   ```
   """
-  @spec delete(String.t) :: {:ok, String.t}
+  @spec delete(String.t()) :: {:ok, String.t()}
   def delete(customer_id) do
     endpoint = "/#{_get_merchant_id()}/customers/#{customer_id}"
     OpenPayHelper.http_request(:delete, endpoint)
@@ -210,7 +210,7 @@ defmodule Openpayex.Customers do
   end
 
   # Adds query params to endpoint
-  @spec _add_query_params(String.t, map) :: String.t
+  @spec _add_query_params(String.t(), map) :: String.t()
   defp _add_query_params(url, params) do
     query_params = URI.encode_query(params)
 
