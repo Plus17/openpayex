@@ -3,7 +3,7 @@ name: Elixir CI
 on: pull_request
 
 jobs:
-  formatter:
+  formatter-job:
 
     runs-on: ubuntu-latest
 
@@ -12,9 +12,9 @@ jobs:
 
     steps:
       - name: Check formatting
-      - run: mix format --check-formatted
+        run: mix format --check-formatted
 
-  build:
+  build-job:
 
     runs-on: ubuntu-latest
 
